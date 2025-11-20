@@ -81,9 +81,17 @@
         }  
       };  
   
-      let streamUrl = "https://getting-backing-seek-nottingham.trycloudflare.com/mpd.mpd";  
-
-
+      // 🔥 Load MPD dynamically from JSON
+      let streamUrl = "";
+      try {
+        const res = await fetch("https://sky-nz-json.vercel.app/data.json");
+        const data = await res.json();
+        streamUrl = data.url;
+        console.log("Fetched MPD:", streamUrl);
+      } catch (err) {
+        console.error("Failed to fetch JSON:", err);
+      }
+  
       player.configure({  
         drm: drmConfig,  
         streaming: {  
